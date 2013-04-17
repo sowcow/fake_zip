@@ -3,11 +3,17 @@ describe FakeZip do
 
   describe '.new' do
     it 'takes file name and yaml string' do
-      expect { FakeZip.new temp, '{}' }.to change { File.exist? temp }.from(false).to(true)
+      expect { FakeZip temp, '{}' }.to change { File.exist? temp }.from(false).to(true)
     end
 
     it 'takes file name and hash' do
-      expect { FakeZip.new temp, {} }.to change { File.exist? temp }.from(false).to(true)
+      expect { FakeZip temp, {} }.to change { File.exist? temp }.from(false).to(true)
+    end
+
+    it 'recreates file if exist' do
+      FakeZip temp, {dir:[:file]}
+      FakeZip temp, {other:[:any]}
+      zip_entries(temp).should == %w[ other/ other/any ]
     end
   end
 
@@ -22,7 +28,7 @@ describe FakeZip do
 
     examples.each do |input,output|
       specify "#{input.inspect} --- #{output.inspect}" do
-        FakeZip.new(temp, input)
+        FakeZip temp, input
         zip_entries(temp).should == output
       end
     end

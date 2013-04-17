@@ -4,6 +4,9 @@ require 'yaml'
 require 'forwardable'
 require 'zip/zipfilesystem'
 
+def FakeZip file, structure
+  FakeZip.new file, structure
+end
 
 module FakeZip
 
@@ -46,6 +49,7 @@ module FakeZip
 
   class FakeZip < Struct.new :file_structure
     def save file
+      File.delete file if File.exist? file
       Zip::ZipFile.open file, Zip::ZipFile::CREATE do |z|
         dirs(struct).each do |dir|
           z.dir.mkdir(dir) unless z.file.exist? dir
