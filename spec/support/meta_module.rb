@@ -24,7 +24,7 @@ class MetaModule2 #< Class
     a_params = params.map{|x|"@#{x}"}.join ?,
 
     Class.new(MetaModule) do
-      eval "def initialize(#{_params}); p 123; #{a_params} = #{_params} end"
+      eval "def initialize(#{_params}); #{a_params} = #{_params} end"
       private; attr_reader *params
     end
   end
