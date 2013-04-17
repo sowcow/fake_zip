@@ -1,6 +1,24 @@
 # FakeZip
 
-TODO: Write a gem description
+## Usage
+
+```ruby
+require 'fake_zip'
+
+# create zip file with given file structure
+FakeZip 'temp.zip', {dir1:[:f1,:f2],dir2:[:f3,{dir4:[:f4]}]}
+
+# ensure it works
+puts `unzip -l temp.zip | awk '{print $4}'`
+===========================================
+dir1/
+dir2/
+dir2/dir4/
+dir1/f1
+dir1/f2
+dir2/f3
+dir2/dir4/f4
+```
 
 ## Installation
 
@@ -15,10 +33,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install fake_zip
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
